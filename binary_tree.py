@@ -25,7 +25,6 @@ class Tree:
         # If the tree is empty, set the root to the new node
         if not self.root:
             self.root = Node(value)
-            print("self.root", self.root)
             return
 
         # Other scenario: find the parent of the new node
@@ -117,21 +116,64 @@ class Tree:
             return -1
         # Base Condition
         if not root.leftChild and not root.rightChild:
-            # The leaf node has 0
+            # The leaf node has 0 height
             return 0
         return 1 + max(self.__height(root.leftChild), self.__height(root.rightChild))
 
+    def min(self):
+        # Return the minimum value in a tree
+        return self.__min(self.root)
+
+    def __min(self, root: Node):
+        # Base Condition
+        if not root.leftChild and not root.rightChild:
+            # The leaf node, return the value of that node
+            return root.value
+        left = self.__min(root.leftChild)
+        right = self.__min(root.rightChild)
+
+        return min(min(left, right), root.value)
+
+    def equals(self, other):
+        if not other:
+            return False
+
+        return self.__equals(self.root, other.root)
+
+    def __equals(self, first: Node, second: Node):
+        if not first and not second:
+            return True
+        if first and second:
+            # Pre-order
+            # Compare the root first, follow by the left, and right subtrees
+            return (
+                first.value == second.value
+                and self.__equals(first.leftChild, second.leftChild)
+                and self.__equals(first.rightChild, second.rightChild)
+            )
+        return False
+
 
 tree = Tree()
-# tree.insert(7)
-# tree.insert(4)
-# tree.insert(9)
-# tree.insert(1)
-# tree.insert(6)
-# tree.insert(8)
-# tree.insert(10)
+tree.insert(7)
+tree.insert(4)
+tree.insert(9)
+tree.insert(1)
+tree.insert(6)
+tree.insert(8)
+tree.insert(10)
 # print(tree.find(11))
 # print(tree.traverseInOrder())
 # print(tree.traversePreOrder())
 # print(tree.traversePostOrder())
-print(tree.height())
+# print(tree.height())
+# print(tree.min())
+tree2 = Tree()
+tree2.insert(7)
+tree2.insert(4)
+tree2.insert(9)
+tree2.insert(1)
+tree2.insert(6)
+tree2.insert(8)
+tree2.insert(10)
+print("Equality Checking", tree.equals(tree2))
