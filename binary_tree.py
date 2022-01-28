@@ -170,6 +170,21 @@ class Tree:
         self.__getNodesAtDistance(root.leftChild, distance - 1, list)
         self.__getNodesAtDistance(root.rightChild, distance - 1, list)
 
+    # The level that we have is the height of the tree
+    # The height of the root node
+    # Once we know the height, we can use the for loops
+    # to print nodes at each level
+    def traverseLevelOrder(self):
+        self.__traverseLevelOrder(self.root)
+
+    def __traverseLevelOrder(self, root):
+        print(range(self.height() + 1))
+        for i in range(self.height() + 1):
+            print("i", i)
+            #  Get the nodes at a given level
+            for value in self.getNodesAtDistance(i):
+                print("value", value)
+
 
 tree = Tree()
 tree.insert(7)
@@ -193,5 +208,6 @@ tree2.insert(1)
 tree2.insert(6)
 tree2.insert(8)
 tree2.insert(10)
-print("Equality Checking", tree.equals(tree2))
-print("Nodes at distance", 2, tree.getNodesAtDistance(2))
+# print("Equality Checking", tree.equals(tree2))
+# print("Nodes at distance", 2, tree.getNodesAtDistance(2))
+tree.traverseLevelOrder()
