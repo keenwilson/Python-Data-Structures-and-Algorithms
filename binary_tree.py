@@ -153,6 +153,23 @@ class Tree:
             )
         return False
 
+    def getNodesAtDistance(self, distance: int):
+        list = []
+        self.__getNodesAtDistance(self.root, distance, list)
+        return list
+
+    def __getNodesAtDistance(self, root, distance: int, list):
+        if not root:
+            return
+        if distance == 0:
+            list.append(root.value)
+            return
+        # If we reach this point,
+        # The distance is greater than zero
+        # As we go down, we decrement the distance by 1
+        self.__getNodesAtDistance(root.leftChild, distance - 1, list)
+        self.__getNodesAtDistance(root.rightChild, distance - 1, list)
+
 
 tree = Tree()
 tree.insert(7)
@@ -177,3 +194,4 @@ tree2.insert(6)
 tree2.insert(8)
 tree2.insert(10)
 print("Equality Checking", tree.equals(tree2))
+print("Nodes at distance", 2, tree.getNodesAtDistance(2))
